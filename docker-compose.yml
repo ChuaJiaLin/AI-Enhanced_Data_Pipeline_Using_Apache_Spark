@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: fashion_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: fashion_dw
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  spark:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    container_name: fashion_spark
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:

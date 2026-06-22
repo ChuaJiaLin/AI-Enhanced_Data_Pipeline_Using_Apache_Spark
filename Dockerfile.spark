@@ -1,0 +1,16 @@
+FROM apache/spark:3.5.1
+
+USER root
+
+RUN pip install \
+    transformers \
+    torch \
+    sentencepiece \
+    sacremoses \
+    rapidfuzz \
+    langdetect \
+    deep-translator
+
+WORKDIR /app
+
+CMD ["sleep", "infinity"]
